@@ -1,0 +1,18 @@
+{% if telegraf.openconfig is defined %}
+[[inputs.jti_openconfig_telemetry]]
+  servers = [ {% for device,port in telegraf.openconfig.hosts.items() %}"{{device}}:{{port}}" {% if not loop.last %}, {%endif%}{% endfor %}]
+  username = "{{telegraf.openconfig.username}}"
+  password = "{{telegraf.openconfig.password}}"
+  client_id = "telegraf"
+  sample_frequency = "2000ms"
+  sensors = ["/interfaces/", "/network-instances/network-instance/protocols/protocol/bgp/"]
+  retry_delay = "1000ms"
+  str_as_tags = false
+{% endif %}
+
+[[outputs.influxdb]]
+      urls = ["http://influxdb:8086"]
+      database = "juniper"
+      timeout = "5s"
+      username = "juniper"
+      password = "juniper"
