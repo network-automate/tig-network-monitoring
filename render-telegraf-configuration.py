@@ -33,7 +33,7 @@ with open(args.yaml) as f:
   data=yaml.load(f.read())
 
 with open(args.template) as f:
-  template = Template(f.read())
+  template = Template(f.read(),lstrip_blocks=True, trim_blocks=True)
 
 conf=open(args.output,'w')
 conf.write(template.render(data))
