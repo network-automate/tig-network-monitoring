@@ -1,7 +1,7 @@
 ---
 telegraf:
   snmp:
-    community: "public" 
+    community: "public"
     hosts:
       172.25.90.67: 161
       172.25.90.68: 161
@@ -11,3 +11,11 @@ telegraf:
       172.25.90.64: 161
       172.25.90.61: 161
       172.25.90.62: 161
+
+  openconfig:
+    username: 'ansible'
+    password: 'juniper123'
+    hosts:
+      172.25.90.67: 32768
+      172.25.90.68: 32768
+      172.25.90.65: 32768

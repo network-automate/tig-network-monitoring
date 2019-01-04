@@ -1,0 +1,874 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "iteration": 1546619910595,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {
+        "Installed prefixes from 172.16.0.5": "#ba43a9"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 18,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeat": "devices",
+      "repeatDirection": "v",
+      "scopedVars": {
+        "devices": {
+          "selected": true,
+          "text": "172.25.90.68",
+          "value": "172.25.90.68"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "alias": "Total prefixes (all peers)",
+          "bars": true,
+          "color": "#052b51"
+        },
+        {
+          "alias": "Received prefixes from 172.16.0.5",
+          "color": "#3f6833",
+          "fill": 0
+        },
+        {
+          "alias": "Accepted prefixes from 172.16.0.5",
+          "color": "#cca300",
+          "fill": 0
+        },
+        {
+          "alias": "Installed prefixes from 172.16.0.5",
+          "color": "#7eb26d",
+          "fill": 2,
+          "yaxis": 1
+        },
+        {
+          "alias": "Sent prefixes to 172.16.0.5",
+          "color": "#bf1b00",
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Total prefixes (all peers)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/global/state/total-prefixes"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            }
+          ]
+        },
+        {
+          "alias": "Received prefixes from $bgpneighbors",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/received"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/@neighbor-address",
+              "operator": "=~",
+              "value": "/^$bgpneighbors$/"
+            }
+          ]
+        },
+        {
+          "alias": "Accepted prefixes from $bgpneighbors",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/accepted"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/@neighbor-address",
+              "operator": "=~",
+              "value": "/^$bgpneighbors$/"
+            }
+          ]
+        },
+        {
+          "alias": "Installed prefixes from $bgpneighbors",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/installed"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/@neighbor-address",
+              "operator": "=~",
+              "value": "/^$bgpneighbors$/"
+            }
+          ]
+        },
+        {
+          "alias": "Sent prefixes to $bgpneighbors",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/sent"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/@neighbor-address",
+              "operator": "=~",
+              "value": "/^$bgpneighbors$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "BGP Prefixes from $devices ($hostnames) to $bgpneighbors",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "description": "",
+      "fill": 1,
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 16,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeat": "devices",
+      "repeatDirection": "v",
+      "scopedVars": {
+        "devices": {
+          "selected": true,
+          "text": "172.25.90.68",
+          "value": "172.25.90.68"
+        }
+      },
+      "seriesOverrides": [
+        {
+          "alias": "# of peers configured on 172.25.90.68",
+          "bars": true,
+          "color": "#052b51"
+        },
+        {
+          "alias": "# of ESTABLISHED sessions on 172.25.90.68",
+          "color": "#9ac48a",
+          "fill": 3,
+          "pointradius": 1,
+          "points": true
+        },
+        {
+          "alias": "# of ACTIVE or CONNECT sessions on 172.25.90.68",
+          "color": "#f2c96d",
+          "fill": 0,
+          "nullPointMode": "null as zero",
+          "pointradius": 1,
+          "points": true,
+          "stack": "B",
+          "transform": "negative-Y"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "# of peers configured on $devices",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(\"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-status\") FROM /bgp/ WHERE (\"device\" =~ /^$devices$/) AND $timeFilter GROUP BY time($__interval) fill(linear)",
+          "rawQuery": false,
+          "refId": "M",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            }
+          ]
+        },
+        {
+          "alias": "# of ESTABLISHED sessions on $devices",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(\"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state\") FROM /bgp/ WHERE (\"device\" =~ /^$devices$/) AND $timeFilter GROUP BY time($__interval) fill(linear)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state",
+              "operator": "=",
+              "value": "ESTABLISHED"
+            }
+          ]
+        },
+        {
+          "alias": "# of ACTIVE or CONNECT sessions on $devices",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(\"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state\") FROM /bgp/ WHERE (\"device\" =~ /^$devices$/ AND \"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state\" = 'ACTIVE') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+          "rawQuery": false,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state",
+              "operator": "=",
+              "value": "ACTIVE"
+            },
+            {
+              "condition": "OR",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state",
+              "operator": "=",
+              "value": "CONNECT"
+            }
+          ]
+        },
+        {
+          "alias": "# of IDLE sessions on $devices",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/bgp/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(\"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state\") FROM /bgp/ WHERE (\"device\" =~ /^$devices$/) AND $timeFilter GROUP BY time($__interval) fill(linear)",
+          "rawQuery": false,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$devices$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/session-state",
+              "operator": "=",
+              "value": "IDLE"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "BGP Session for $devices",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [
+    "evpn",
+    "junos",
+    "openconfig"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "text": "underlay",
+          "value": "underlay"
+        },
+        "datasource": "influxdb",
+        "definition": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"/network-instances/network-instance/protocols/protocol/bgp/peer-groups/peer-group/@peer-group-name\"",
+        "hide": 2,
+        "includeAll": false,
+        "label": "BGP Group",
+        "multi": false,
+        "name": "bgpGroup",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"/network-instances/network-instance/protocols/protocol/bgp/peer-groups/peer-group/@peer-group-name\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": true
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "172.25.90.68",
+          "value": [
+            "172.25.90.68"
+          ]
+        },
+        "datasource": "influxdb",
+        "definition": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"device\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": true,
+        "name": "devices",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"device\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "demo-qfx10k2-15",
+          "value": "demo-qfx10k2-15"
+        },
+        "datasource": "influxdb",
+        "definition": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"system_id\"",
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "hostnames",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"system_id\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "172.16.0.5",
+          "value": "172.16.0.5"
+        },
+        "datasource": "influxdb",
+        "definition": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/@neighbor-address\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Neighbor BGP",
+        "multi": false,
+        "name": "bgpneighbors",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/@neighbor-address\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "isNone": true,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "influxdb",
+        "definition": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/@session-state\"",
+        "hide": 2,
+        "includeAll": false,
+        "label": "BGP State",
+        "multi": false,
+        "name": "bgpState",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/@session-state\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-5m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "Fabric BGP Monitoring (Openconfig)",
+  "uid": "KOeZioUmz",
+  "version": 1
+}

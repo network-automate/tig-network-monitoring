@@ -12,23 +12,23 @@
       }
     ]
   },
-  "description": "Monitor IP Fabric built with EVPN/VXLAN Jumpstart project",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1546613416328,
+  "iteration": 1546620782364,
   "links": [],
   "panels": [
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "bps OUT": "#bf1b00"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "influxdb",
-      "fill": 1,
+      "fill": 0,
       "gridPos": {
-        "h": 10,
-        "w": 12,
+        "h": 11,
+        "w": 13,
         "x": 0,
         "y": 0
       },
@@ -39,7 +39,6 @@
         "current": true,
         "max": true,
         "min": true,
-        "rightSide": false,
         "show": true,
         "total": false,
         "values": true
@@ -52,23 +51,43 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": "HOSTNAME",
+      "repeat": "ifName",
       "repeatDirection": "v",
       "scopedVars": {
-        "HOSTNAME": {
+        "ifName": {
           "selected": true,
-          "text": "demo-qfx10k2-14",
-          "value": "demo-qfx10k2-14"
+          "text": "et-0/0/0",
+          "value": "et-0/0/0"
         }
       },
       "seriesOverrides": [
         {
-          "alias": "IN bps for {et-0/0/0}",
-          "color": "#e24d42"
+          "alias": "pps IN",
+          "bars": true,
+          "color": "#64b0c8",
+          "fill": 1,
+          "yaxis": 1
         },
         {
-          "alias": "OUT bps for {et-0/0/0}",
-          "color": "#82b5d8"
+          "alias": "pps OUT",
+          "bars": true,
+          "color": "#2f575e",
+          "fill": 1,
+          "transform": "negative-Y",
+          "yaxis": 1
+        },
+        {
+          "alias": "bps IN",
+          "color": "#f9ba8f",
+          "linewidth": 2,
+          "yaxis": 2
+        },
+        {
+          "alias": "bps OUT",
+          "color": "#ea6460",
+          "linewidth": 2,
+          "transform": "negative-Y",
+          "yaxis": 2
         }
       ],
       "spaceLength": 10,
@@ -76,7 +95,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "IN bps for $ifName",
+          "alias": "pps IN",
           "groupBy": [
             {
               "params": [
@@ -92,7 +111,7 @@
             }
           ],
           "hide": false,
-          "measurement": "snmp_interfaces_statistics",
+          "measurement": "/interfaces/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -101,7 +120,7 @@
             [
               {
                 "params": [
-                  "ifHCInOctets"
+                  "/interfaces/interface/state/counters/in-pkts"
                 ],
                 "type": "field"
               },
@@ -114,31 +133,25 @@
                   "1s"
                 ],
                 "type": "non_negative_derivative"
-              },
-              {
-                "params": [
-                  "*8"
-                ],
-                "type": "math"
               }
             ]
           ],
           "tags": [
             {
-              "key": "hostname",
+              "key": "device",
               "operator": "=~",
-              "value": "/^$HOSTNAME$/"
+              "value": "/^$device$/"
             },
             {
               "condition": "AND",
-              "key": "ifName",
+              "key": "/interfaces/interface/@name",
               "operator": "=~",
               "value": "/^$ifName$/"
             }
           ]
         },
         {
-          "alias": "OUT bps for $ifName",
+          "alias": "pps OUT",
           "groupBy": [
             {
               "params": [
@@ -154,16 +167,74 @@
             }
           ],
           "hide": false,
-          "measurement": "snmp_interfaces_statistics",
+          "measurement": "/interfaces/",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"/interfaces/interface/state/counters/out-pkts\"), 1s) FROM /interfaces/ WHERE (\"device\" = '172.25.90.68' AND \"/interfaces/interface/@name\" = 'select tag value') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+          "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "ifHCOutOctets"
+                  "/interfaces/interface/state/counters/out-pkts"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "non_negative_derivative"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$device$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/interfaces/interface/@name",
+              "operator": "=~",
+              "value": "/^$ifName$/"
+            }
+          ]
+        },
+        {
+          "alias": "bps IN",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/interfaces/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/interfaces/interface/state/counters/in-octets"
                 ],
                 "type": "field"
               },
@@ -187,13 +258,75 @@
           ],
           "tags": [
             {
-              "key": "hostname",
+              "key": "device",
               "operator": "=~",
-              "value": "/^$HOSTNAME$/"
+              "value": "/^$device$/"
             },
             {
               "condition": "AND",
-              "key": "ifName",
+              "key": "/interfaces/interface/@name",
+              "operator": "=~",
+              "value": "/^$ifName$/"
+            }
+          ]
+        },
+        {
+          "alias": "bps OUT",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/interfaces/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/interfaces/interface/state/counters/out-octets"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=~",
+              "value": "/^$device$/"
+            },
+            {
+              "condition": "AND",
+              "key": "/interfaces/interface/@name",
               "operator": "=~",
               "value": "/^$ifName$/"
             }
@@ -204,7 +337,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "$HOSTNAME - IN/OUT bps",
+      "title": "Traffic for $device - $ifName",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -221,8 +354,8 @@
       },
       "yaxes": [
         {
-          "format": "bps",
-          "label": null,
+          "format": "pps",
+          "label": "pps",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -230,7 +363,7 @@
         },
         {
           "format": "bps",
-          "label": null,
+          "label": "bps",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -238,23 +371,25 @@
         }
       ],
       "yaxis": {
-        "align": false,
+        "align": true,
         "alignLevel": null
       }
     },
     {
-      "aliasColors": {},
-      "bars": true,
+      "aliasColors": {
+        "bps OUT": "#bf1b00"
+      },
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "fill": 1,
+      "fill": 0,
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
+        "h": 11,
+        "w": 11,
+        "x": 13,
         "y": 0
       },
-      "id": 5,
+      "id": 3,
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -265,7 +400,7 @@
         "total": false,
         "values": true
       },
-      "lines": false,
+      "lines": true,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
@@ -273,24 +408,27 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": "HOSTNAME",
+      "repeat": "ifName",
       "repeatDirection": "v",
       "scopedVars": {
-        "HOSTNAME": {
+        "ifName": {
           "selected": true,
-          "text": "demo-qfx10k2-14",
-          "value": "demo-qfx10k2-14"
+          "text": "et-0/0/0",
+          "value": "et-0/0/0"
         }
       },
       "seriesOverrides": [
         {
-          "alias": "OUT pps for {et-0/0/0}",
-          "color": "#e24d42",
-          "transform": "negative-Y"
+          "alias": "pps OUT",
+          "bars": true,
+          "color": "#2f575e",
+          "fill": 1,
+          "yaxis": 1
         },
         {
-          "alias": "IN pps for {et-0/0/0}",
-          "color": "#1f78c1"
+          "alias": "Error received",
+          "color": "#e24d42",
+          "linewidth": 2
         }
       ],
       "spaceLength": 10,
@@ -298,7 +436,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "IN pps for $ifName",
+          "alias": "pps OUT",
           "groupBy": [
             {
               "params": [
@@ -314,72 +452,18 @@
             }
           ],
           "hide": false,
-          "measurement": "snmp_interfaces_statistics",
+          "measurement": "/interfaces/",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "ifHCInUcastPkts"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": [
-                  "1s"
-                ],
-                "type": "non_negative_derivative"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "hostname",
-              "operator": "=~",
-              "value": "/^$HOSTNAME$/"
-            },
-            {
-              "condition": "AND",
-              "key": "ifName",
-              "operator": "=~",
-              "value": "/^$ifName$/"
-            }
-          ]
-        },
-        {
-          "alias": "OUT pps for $ifName",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "snmp_interfaces_statistics",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "query": "SELECT non_negative_derivative(mean(\"/interfaces/interface/state/counters/out-pkts\"), 1s) FROM /interfaces/ WHERE (\"device\" = '172.25.90.68' AND \"/interfaces/interface/@name\" = 'select tag value') AND $timeFilter GROUP BY time($__interval) fill(linear)",
+          "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "ifHCOutOctets"
+                  "/interfaces/interface/state/counters/out-pkts"
                 ],
                 "type": "field"
               },
@@ -397,13 +481,69 @@
           ],
           "tags": [
             {
-              "key": "hostname",
-              "operator": "=~",
-              "value": "/^$HOSTNAME$/"
+              "key": "device",
+              "operator": "=",
+              "value": "172.25.90.68"
             },
             {
               "condition": "AND",
-              "key": "ifName",
+              "key": "/interfaces/interface/@name",
+              "operator": "=~",
+              "value": "/^$ifName$/"
+            }
+          ]
+        },
+        {
+          "alias": "Error received",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "/interfaces/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "/interfaces/interface/state/counters/out-errors"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "non_negative_derivative"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "device",
+              "operator": "=",
+              "value": "172.25.90.68"
+            },
+            {
+              "condition": "AND",
+              "key": "/interfaces/interface/@name",
               "operator": "=~",
               "value": "/^$ifName$/"
             }
@@ -414,7 +554,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "$HOSTNAME - IN/OUT PPS",
+      "title": "Traffic for $device - $ifName",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -432,15 +572,15 @@
       "yaxes": [
         {
           "format": "pps",
-          "label": null,
+          "label": "pps",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
-          "format": "pps",
-          "label": null,
+          "format": "bps",
+          "label": "bps",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -453,75 +593,63 @@
       }
     }
   ],
-  "refresh": "10s",
+  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [
     "evpn",
     "junos",
-    "snmp"
+    "openconfig"
   ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {
-          "selected": true,
           "tags": [],
-          "text": "demo-qfx10k2-14",
+          "text": "172.25.90.67",
+          "value": "172.25.90.67"
+        },
+        "datasource": "influxdb",
+        "definition": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"device\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Device IP",
+        "multi": false,
+        "name": "device",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"device\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "et-0/0/0",
           "value": [
-            "demo-qfx10k2-14"
+            "et-0/0/0"
           ]
         },
         "datasource": "influxdb",
-        "definition": "SHOW TAG VALUES FROM \"snmp_BGP\" with KEY = \"hostname\"",
+        "definition": "SHOW TAG VALUES FROM  \"/interfaces/\" with KEY  = \"/interfaces/interface/@name\" ",
         "hide": 0,
         "includeAll": true,
-        "label": "Device Hostname",
+        "label": "Interface Name",
         "multi": true,
-        "name": "HOSTNAME",
-        "options": [
-          {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": true,
-            "text": "demo-qfx10k2-14",
-            "value": "demo-qfx10k2-14"
-          },
-          {
-            "selected": false,
-            "text": "demo-qfx10k2-15",
-            "value": "demo-qfx10k2-15"
-          },
-          {
-            "selected": false,
-            "text": "demo-qfx5110-10",
-            "value": "demo-qfx5110-10"
-          },
-          {
-            "selected": false,
-            "text": "demo-qfx5110-11",
-            "value": "demo-qfx5110-11"
-          },
-          {
-            "selected": false,
-            "text": "demo-qfx5110-12",
-            "value": "demo-qfx5110-12"
-          },
-          {
-            "selected": false,
-            "text": "demo-qfx5110-9",
-            "value": "demo-qfx5110-9"
-          }
-        ],
-        "query": "SHOW TAG VALUES FROM \"snmp_BGP\" with KEY = \"hostname\"",
-        "refresh": 0,
-        "regex": "",
+        "name": "ifName",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM  \"/interfaces/\" with KEY  = \"/interfaces/interface/@name\" ",
+        "refresh": 1,
+        "regex": "/((ge-|et-|xe-|irb-).*)/",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -532,186 +660,33 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
-          "text": "et-0/0/0",
-          "value": [
-            "et-0/0/0"
-          ]
+          "text": "demo-qfx10k2-15",
+          "value": "demo-qfx10k2-15"
         },
         "datasource": "influxdb",
-        "definition": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"ifName\"",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Interface name",
+        "definition": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"system_id\"",
+        "hide": 2,
+        "includeAll": true,
+        "label": "Hostname",
         "multi": true,
-        "name": "ifName",
+        "name": "hostname",
         "options": [
           {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
             "selected": true,
-            "text": "et-0/0/0",
-            "value": "et-0/0/0"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/0.0",
-            "value": "et-0/0/0.0"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/0.16386",
-            "value": "et-0/0/0.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/1",
-            "value": "et-0/0/1"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/1.0",
-            "value": "et-0/0/1.0"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/1.16386",
-            "value": "et-0/0/1.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/2",
-            "value": "et-0/0/2"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/2.0",
-            "value": "et-0/0/2.0"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/2.16386",
-            "value": "et-0/0/2.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/3",
-            "value": "et-0/0/3"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/3.0",
-            "value": "et-0/0/3.0"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/3.16386",
-            "value": "et-0/0/3.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/48",
-            "value": "et-0/0/48"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/48.16386",
-            "value": "et-0/0/48.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/49",
-            "value": "et-0/0/49"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/49.16386",
-            "value": "et-0/0/49.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/50",
-            "value": "et-0/0/50"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/50.16386",
-            "value": "et-0/0/50.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/51",
-            "value": "et-0/0/51"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/51.16386",
-            "value": "et-0/0/51.16386"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/6",
-            "value": "et-0/0/6"
-          },
-          {
-            "selected": false,
-            "text": "et-0/0/6.16386",
-            "value": "et-0/0/6.16386"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/0",
-            "value": "xe-0/0/0"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/1",
-            "value": "xe-0/0/1"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/2",
-            "value": "xe-0/0/2"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/0.16386",
-            "value": "xe-0/0/0.16386"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/1.16386",
-            "value": "xe-0/0/1.16386"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/2.16386",
-            "value": "xe-0/0/2.16386"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/6:0",
-            "value": "xe-0/0/6:0"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/6:1",
-            "value": "xe-0/0/6:1"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/6:2",
-            "value": "xe-0/0/6:2"
-          },
-          {
-            "selected": false,
-            "text": "xe-0/0/6:3",
-            "value": "xe-0/0/6:3"
+            "text": "demo-qfx10k2-15",
+            "value": "demo-qfx10k2-15"
           }
         ],
-        "query": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"ifName\"",
+        "query": "SHOW TAG VALUES FROM  \"/network-instances/network-instance/protocols/protocol/bgp/\" with KEY = \"system_id\"",
         "refresh": 0,
-        "regex": "/((et|ge|xe).*)/",
+        "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -749,8 +724,8 @@
       "30d"
     ]
   },
-  "timezone": "browser",
-  "title": "Fabric Monitoring (SNMP)",
-  "uid": "ZmNMA58mz",
+  "timezone": "",
+  "title": "Fabric Interface Monitoring (Openconfig)",
+  "uid": "OtTOFT8mz",
   "version": 1
 }
