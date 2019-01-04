@@ -13,6 +13,7 @@ services:
       - 8083
     networks:
       - tig
+  {% if telegraf.openconfig is defined %}
 
   telegraf-openconfig:
     image: telegraf:1.9.1
@@ -23,6 +24,8 @@ services:
       - "influxdb"
     networks:
       - tig
+  {% endif %}
+  {% if telegraf.snmp is defined %}
 
   telegraf-snmp:
     image: telegraf:1.9.1
@@ -33,6 +36,7 @@ services:
       - "influxdb"
     networks:
       - tig
+  {% endif %}
 
   grafana:
     image: grafana/grafana:5.4.2
@@ -44,7 +48,11 @@ services:
       - $PWD/configs/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
       - $PWD/dashboards:/var/tmp/dashboards
     depends_on:
+      {% if telegraf.openconfig is defined %}
       - "telegraf-openconfig"
+      {% endif %}
+      {% if telegraf.snmp is defined %}
       - "telegraf-snmp"
+      {% endif %}
     networks:
       - tig

@@ -30,14 +30,16 @@ influxb-cli:
 	docker exec -it influxdb bash
 
 restart: stop start
+rebuild: destroy build-telegraf-conf build
 
-up:
+build:
 	@echo "======================================================================"
 	@echo "create docker networks, pull docker images, create and start docker containers"
 	@echo "======================================================================"
+	python ./render-telegraf-configuration.py -o 'docker-compose.yml' -t 'templates/docker-compose-tig.j2' -y 'data.yml'
 	docker-compose -f ./docker-compose.yml up -d
 
-down:
+destroy:
 	@echo "======================================================================"
 	@echo "stop docker containers, remove docker containers, remove docker networks"
 	@echo "======================================================================"
