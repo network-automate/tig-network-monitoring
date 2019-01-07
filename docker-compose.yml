@@ -25,7 +25,7 @@ services:
       - tig
 
   telegraf-snmp:
-    image: telegraf:1.9.1
+    image: inetsix/telegraf-snmp
     container_name: telegraf-snmp
     volumes:
       - $PWD/configs/telegraf-snmp.conf:/etc/telegraf/telegraf.conf:ro
@@ -39,6 +39,8 @@ services:
     container_name: grafana
     ports:
       - "9081:3000"
+    env_file:
+      - 'env.grafana'
     volumes:
       - $PWD/configs/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
       - $PWD/configs/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
