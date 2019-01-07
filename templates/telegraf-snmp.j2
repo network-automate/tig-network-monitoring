@@ -2,7 +2,7 @@
 [[inputs.snmp]]
   agents = [ {% for device,port in telegraf.snmp.hosts.items() %}"{{device}}:{{port}}" {% if not loop.last %}, {%endif%}{% endfor %}]
   name_prefix = "snmp_"
-  interval = "5000ms"
+  interval = "10s"
   version = 2
   community = "{{telegraf.snmp.community}}"
 
@@ -22,10 +22,9 @@
 
 
   [[inputs.snmp.table]]
-    name = "BGP"
+    name = "bgp_statistics"
     inherit_tags = [ "hostname" ]
-{#     [inputs.snmp.tagpass]
-      bgpPeerRemoteAddr = ["192.168*"] #}
+    oid = "BGP4-MIB::bgpPeerTable"
     [[inputs.snmp.table.field]]
       name = "bgpPeerState"
       oid = ".1.3.6.1.2.1.15.3.1.2"
@@ -36,10 +35,25 @@
       is_tag = true
 
   [[inputs.snmp.table]]
+    name = "routing_statistics"
+    inherit_tags = [ "hostname" ]
+    oid = "IP-FORWARD-MIB::inetCidrRouteTable"
+    [[inputs.snmp.field]]
+      name="inetCidrRouteNumber"
+      oid="IP-FORWARD-MIB::inetCidrRouteNumber"
+    [[inputs.snmp.table.field]]
+      name = "inetCidrRouteDest"
+      oid = "IP-FORWARD-MIB::inetCidrRouteDest"
+      is_tag = true
+    [[inputs.snmp.table.field]]
+      name = "inetCidrRouteProto"
+      oid = "IP-FORWARD-MIB::inetCidrRouteProto"
+      is_tag = true
+
+  [[inputs.snmp.table]]
     name = "interfaces_statistics"
     inherit_tags = [ "hostname" ]
-{#     [inputs.snmp.tagpass]
-      ifName = ["ge-0/0/0", "ge-0/0/1", "ge-0/0/2"] #}
+    oid = "IF-MIB::ifTable"
     [[inputs.snmp.table.field]]
       name = "ifName"
       oid = ".1.3.6.1.2.1.31.1.1.1.1"

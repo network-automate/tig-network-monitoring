@@ -16,33 +16,907 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1546613416328,
+  "iteration": 1546864608118,
   "links": [],
   "panels": [
+    {
+      "columns": [
+        {
+          "text": "Current",
+          "value": "current"
+        },
+        {
+          "text": "Max",
+          "value": "max"
+        }
+      ],
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 7,
+        "w": 14,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "links": [],
+      "minSpan": 10,
+      "pageSize": 20,
+      "repeat": "HOSTNAME",
+      "repeatDirection": "h",
+      "scopedVars": {
+        "HOSTNAME": {
+          "selected": true,
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
+        }
+      },
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "colorMode": null,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "mappingType": 1,
+          "pattern": "Time",
+          "preserveFormat": false,
+          "rangeMaps": [
+            {
+              "from": "",
+              "text": "",
+              "to": ""
+            }
+          ],
+          "sanitize": true,
+          "thresholds": [
+            "2",
+            "3"
+          ],
+          "type": "string",
+          "valueMaps": []
+        },
+        {
+          "alias": "Current State",
+          "colorMode": "cell",
+          "colors": [
+            "#890f02",
+            "#99440a",
+            "#2f575e"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Current",
+          "thresholds": [
+            "3",
+            "4"
+          ],
+          "type": "string",
+          "unit": "short",
+          "valueMaps": [
+            {
+              "text": "ESTABLISHED",
+              "value": "6"
+            },
+            {
+              "text": "CONNECT",
+              "value": "3"
+            },
+            {
+              "text": "ACTIVE",
+              "value": "2"
+            },
+            {
+              "text": "IDLE",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "alias": "Best State",
+          "colorMode": "value",
+          "colors": [
+            "#e24d42",
+            "#c15c17",
+            "#7eb26d"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Max",
+          "thresholds": [
+            "3",
+            "4"
+          ],
+          "type": "string",
+          "unit": "short",
+          "valueMaps": [
+            {
+              "text": "ESTABLISHED",
+              "value": "6"
+            },
+            {
+              "text": "CONNECT",
+              "value": "3"
+            },
+            {
+              "text": "ACTIVE",
+              "value": "2"
+            },
+            {
+              "text": "IDLE",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "$HOSTNAME - connection to $tag_bgpPeerRemoteAddr - $col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "bgpPeerRemoteAddr"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "snmp_bgp_statistics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bgpPeerState"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "state"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "bgpPeerRemoteAddr",
+              "operator": "=~",
+              "value": "/^$neighbors$/"
+            }
+          ]
+        }
+      ],
+      "title": "BGP Peer states",
+      "transform": "timeseries_aggregations",
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "id": 8,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeat": "HOSTNAME",
+      "repeatDirection": "h",
+      "scopedVars": {
+        "HOSTNAME": {
+          "selected": true,
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
+        }
+      },
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_bgpPeerRemoteAddr - Update $col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "bgpPeerRemoteAddr"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "snmp_bgp_statistics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bgpPeerInUpdates"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "10s"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "IN"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "bgpPeerOutUpdates"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "10s"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "OUT"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=~",
+              "value": "/^$HOSTNAME$/"
+            },
+            {
+              "condition": "AND",
+              "key": "bgpPeerRemoteAddr",
+              "operator": "=~",
+              "value": "/^$neighbors$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "BGP Update messages for $HOSTNAME",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "ops",
+          "label": "# of Update messages",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "fill": 1,
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "id": 11,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "inetCidrRouteProto"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "linear"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "snmp_routing_statistics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "inetCidrRouteType"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=~",
+              "value": "/^$HOSTNAME$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "BGP Update messages for $HOSTNAME",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": null,
+          "format": "short",
+          "label": "# of Update messages",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "columns": [
+        {
+          "text": "Current",
+          "value": "current"
+        },
+        {
+          "text": "Avg",
+          "value": "avg"
+        },
+        {
+          "text": "Min",
+          "value": "min"
+        },
+        {
+          "text": "Max",
+          "value": "max"
+        }
+      ],
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 17
+      },
+      "id": 5,
+      "links": [],
+      "pageSize": 20,
+      "repeat": "HOSTNAME",
+      "repeatDirection": "h",
+      "scopedVars": {
+        "HOSTNAME": {
+          "selected": true,
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
+        }
+      },
+      "scroll": false,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "$tag_ifName - $col",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "ifName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "snmp_interfaces_statistics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ifHCInOctets"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "ingress"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "ifHCOutOctets"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "egress"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=~",
+              "value": "/^$HOSTNAME$/"
+            },
+            {
+              "condition": "AND",
+              "key": "ifName",
+              "operator": "=~",
+              "value": "/^$ifName$/"
+            }
+          ]
+        }
+      ],
+      "title": "Interface Statistics for $HOSTNAME (bps)",
+      "transform": "timeseries_aggregations",
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "columns": [
+        {
+          "text": "Current",
+          "value": "current"
+        },
+        {
+          "text": "Avg",
+          "value": "avg"
+        },
+        {
+          "text": "Min",
+          "value": "min"
+        },
+        {
+          "text": "Max",
+          "value": "max"
+        }
+      ],
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 17
+      },
+      "id": 6,
+      "links": [],
+      "pageSize": null,
+      "repeat": "HOSTNAME",
+      "repeatDirection": "h",
+      "scopedVars": {
+        "HOSTNAME": {
+          "selected": true,
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
+        }
+      },
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "alias": "$tag_ifName - $col (pps)",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "ifName"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "snmp_interfaces_statistics",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "ifHCInUcastPkts"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "ingress"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "ifHCOutUcastPkts"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "egress"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=~",
+              "value": "/^$HOSTNAME$/"
+            },
+            {
+              "condition": "AND",
+              "key": "ifName",
+              "operator": "=~",
+              "value": "/^$ifName$/"
+            }
+          ]
+        }
+      ],
+      "title": "Interface Statistics $HOSTNAME (pps)",
+      "transform": "timeseries_aggregations",
+      "transparent": true,
+      "type": "table"
+    },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "influxdb",
-      "fill": 1,
+      "fill": 0,
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 25
       },
       "id": 2,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "rightSide": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
       "linewidth": 1,
@@ -63,12 +937,11 @@
       },
       "seriesOverrides": [
         {
-          "alias": "IN bps for {et-0/0/0}",
-          "color": "#e24d42"
+          "alias": "/Ingress/"
         },
         {
-          "alias": "OUT bps for {et-0/0/0}",
-          "color": "#82b5d8"
+          "alias": "/Egress/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -76,13 +949,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "IN bps for $ifName",
+          "alias": "$tag_ifName - $col",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "ifName"
+              ],
+              "type": "tag"
             },
             {
               "params": [
@@ -120,46 +999,14 @@
                   "*8"
                 ],
                 "type": "math"
+              },
+              {
+                "params": [
+                  "Ingress"
+                ],
+                "type": "alias"
               }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "hostname",
-              "operator": "=~",
-              "value": "/^$HOSTNAME$/"
-            },
-            {
-              "condition": "AND",
-              "key": "ifName",
-              "operator": "=~",
-              "value": "/^$ifName$/"
-            }
-          ]
-        },
-        {
-          "alias": "OUT bps for $ifName",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "snmp_interfaces_statistics",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
+            ],
             [
               {
                 "params": [
@@ -182,6 +1029,12 @@
                   "*8"
                 ],
                 "type": "math"
+              },
+              {
+                "params": [
+                  "Egress"
+                ],
+                "type": "alias"
               }
             ]
           ],
@@ -244,28 +1097,30 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "fill": 1,
+      "datasource": "influxdb",
+      "fill": 0,
       "gridPos": {
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 25
       },
-      "id": 5,
+      "id": 3,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
         "show": true,
         "total": false,
-        "values": true
+        "values": false
       },
-      "lines": false,
+      "lines": true,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
@@ -284,13 +1139,11 @@
       },
       "seriesOverrides": [
         {
-          "alias": "OUT pps for {et-0/0/0}",
-          "color": "#e24d42",
-          "transform": "negative-Y"
+          "alias": "/Ingress/"
         },
         {
-          "alias": "IN pps for {et-0/0/0}",
-          "color": "#1f78c1"
+          "alias": "/Egress/",
+          "transform": "negative-Y"
         }
       ],
       "spaceLength": 10,
@@ -298,13 +1151,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "IN pps for $ifName",
+          "alias": "$tag_ifName - $col",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "ifName"
+              ],
+              "type": "tag"
             },
             {
               "params": [
@@ -336,50 +1195,24 @@
                   "1s"
                 ],
                 "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "Ingress"
+                ],
+                "type": "alias"
               }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "hostname",
-              "operator": "=~",
-              "value": "/^$HOSTNAME$/"
-            },
-            {
-              "condition": "AND",
-              "key": "ifName",
-              "operator": "=~",
-              "value": "/^$ifName$/"
-            }
-          ]
-        },
-        {
-          "alias": "OUT pps for $ifName",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "snmp_interfaces_statistics",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
+            ],
             [
               {
                 "params": [
-                  "ifHCOutOctets"
+                  "ifHCOutUcastPkts"
                 ],
                 "type": "field"
               },
@@ -392,6 +1225,18 @@
                   "1s"
                 ],
                 "type": "non_negative_derivative"
+              },
+              {
+                "params": [
+                  "*8"
+                ],
+                "type": "math"
+              },
+              {
+                "params": [
+                  "Egress"
+                ],
+                "type": "alias"
               }
             ]
           ],
@@ -414,7 +1259,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "$HOSTNAME - IN/OUT PPS",
+      "title": "$HOSTNAME - IN/OUT pps",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -431,7 +1276,7 @@
       },
       "yaxes": [
         {
-          "format": "pps",
+          "format": "bps",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -439,7 +1284,7 @@
           "show": true
         },
         {
-          "format": "pps",
+          "format": "bps",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -533,9 +1378,10 @@
         "current": {
           "selected": true,
           "tags": [],
-          "text": "et-0/0/0",
+          "text": "et-0/0/0 + et-0/0/1",
           "value": [
-            "et-0/0/0"
+            "et-0/0/0",
+            "et-0/0/1"
           ]
         },
         "datasource": "influxdb",
@@ -562,7 +1408,7 @@
             "value": "et-0/0/0.16386"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "et-0/0/1",
             "value": "et-0/0/1"
           },
@@ -712,6 +1558,136 @@
         "regex": "/((et|ge|xe).*)/",
         "skipUrlSync": false,
         "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "tags": [],
+          "text": "172.16.0.1 + 172.16.0.11",
+          "value": [
+            "172.16.0.1",
+            "172.16.0.11"
+          ]
+        },
+        "datasource": "influxdb",
+        "definition": "SHOW TAG VALUES FROM \"snmp_bgp_statistics\" with KEY = \"bgpPeerRemoteAddr\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Peer",
+        "multi": true,
+        "name": "neighbors",
+        "options": [
+          {
+            "selected": false,
+            "text": "10.0.0.11",
+            "value": "10.0.0.11"
+          },
+          {
+            "selected": false,
+            "text": "10.0.0.12",
+            "value": "10.0.0.12"
+          },
+          {
+            "selected": false,
+            "text": "10.0.0.21",
+            "value": "10.0.0.21"
+          },
+          {
+            "selected": false,
+            "text": "10.0.0.22",
+            "value": "10.0.0.22"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.0",
+            "value": "172.16.0.0"
+          },
+          {
+            "selected": true,
+            "text": "172.16.0.1",
+            "value": "172.16.0.1"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.10",
+            "value": "172.16.0.10"
+          },
+          {
+            "selected": true,
+            "text": "172.16.0.11",
+            "value": "172.16.0.11"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.12",
+            "value": "172.16.0.12"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.13",
+            "value": "172.16.0.13"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.14",
+            "value": "172.16.0.14"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.15",
+            "value": "172.16.0.15"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.2",
+            "value": "172.16.0.2"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.3",
+            "value": "172.16.0.3"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.4",
+            "value": "172.16.0.4"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.5",
+            "value": "172.16.0.5"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.6",
+            "value": "172.16.0.6"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.7",
+            "value": "172.16.0.7"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.8",
+            "value": "172.16.0.8"
+          },
+          {
+            "selected": false,
+            "text": "172.16.0.9",
+            "value": "172.16.0.9"
+          }
+        ],
+        "query": "SHOW TAG VALUES FROM \"snmp_bgp_statistics\" with KEY = \"bgpPeerRemoteAddr\"",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 3,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
