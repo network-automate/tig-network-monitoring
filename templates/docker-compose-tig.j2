@@ -28,7 +28,7 @@ services:
   {% if telegraf.snmp is defined %}
 
   telegraf-snmp:
-    image: telegraf:1.9.1
+    image: inetsix/telegraf-snmp
     container_name: telegraf-snmp
     volumes:
       - $PWD/configs/telegraf-snmp.conf:/etc/telegraf/telegraf.conf:ro
