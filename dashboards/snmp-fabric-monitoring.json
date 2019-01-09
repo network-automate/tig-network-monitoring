@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1547017829484,
+  "iteration": 1547041052309,
   "links": [],
   "panels": [
     {
@@ -404,8 +404,8 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx5110-11",
-          "value": "demo-qfx5110-11"
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
         }
       },
       "seriesOverrides": [
@@ -1323,8 +1323,8 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx5110-11",
-          "value": "demo-qfx5110-11"
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
         }
       },
       "scroll": true,
@@ -1540,8 +1540,8 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx5110-11",
-          "value": "demo-qfx5110-11"
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
         }
       },
       "scroll": true,
@@ -1736,11 +1736,16 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx5110-11",
-          "value": "demo-qfx5110-11"
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
         }
       },
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "/OUT/",
+          "transform": "negative-Y"
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
@@ -1989,7 +1994,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "BGP Sessions state for $HOSTNAME",
+      "title": "BGP session transition rate for $HOSTNAME",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2008,7 +2013,7 @@
         {
           "decimals": null,
           "format": "ops",
-          "label": "# of Update messages",
+          "label": "# of state transitions",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -2029,7 +2034,7 @@
       }
     }
   ],
-  "refresh": "5s",
+  "refresh": "10s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [
@@ -2043,8 +2048,8 @@
       {
         "allValue": null,
         "current": {
-          "text": "demo-qfx5110-11",
-          "value": "demo-qfx5110-11"
+          "text": "demo-qfx10k2-14",
+          "value": "demo-qfx10k2-14"
         },
         "datasource": "influxdb",
         "definition": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"hostname\"",
@@ -2097,9 +2102,7 @@
         "allValue": null,
         "current": {
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "influxdb",
         "definition": "SHOW TAG VALUES FROM \"snmp_bgp_statistics\" with KEY = \"bgpPeerRemoteAddr\"",
@@ -2123,7 +2126,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -2151,8 +2154,8 @@
       "30d"
     ]
   },
-  "timezone": "browser",
+  "timezone": "",
   "title": "Fabric Monitoring Overview",
   "uid": "R_DbFw8ik",
-  "version": 2
+  "version": 1
 }
