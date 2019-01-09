@@ -16,8 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1546948116660,
+  "iteration": 1547017080711,
   "links": [],
   "panels": [
     {
@@ -79,15 +78,18 @@
         },
         {
           "alias": "",
-          "colorMode": null,
+          "colorMode": "value",
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "decimals": 2,
+          "decimals": 0,
           "pattern": "/.*/",
-          "thresholds": [],
+          "thresholds": [
+            "10000",
+            "100000"
+          ],
           "type": "number",
           "unit": "bps"
         }
@@ -131,7 +133,7 @@
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "last"
               },
               {
                 "params": [
@@ -161,7 +163,7 @@
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "last"
               },
               {
                 "params": [
@@ -249,15 +251,18 @@
         },
         {
           "alias": "",
-          "colorMode": null,
+          "colorMode": "value",
           "colors": [
             "rgba(50, 172, 45, 0.97)",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "decimals": 2,
+          "decimals": 0,
           "pattern": "/.*/",
-          "thresholds": [],
+          "thresholds": [
+            "1000",
+            "100000"
+          ],
           "type": "number",
           "unit": "pps"
         }
@@ -301,7 +306,7 @@
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "last"
               },
               {
                 "params": [
@@ -331,7 +336,7 @@
               },
               {
                 "params": [],
-                "type": "distinct"
+                "type": "last"
               },
               {
                 "params": [
@@ -466,7 +471,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               },
               {
                 "params": [
@@ -496,7 +501,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               },
               {
                 "params": [
@@ -660,19 +665,13 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               },
               {
                 "params": [
                   "1s"
                 ],
                 "type": "non_negative_derivative"
-              },
-              {
-                "params": [
-                  "*8"
-                ],
-                "type": "math"
               },
               {
                 "params": [
@@ -690,19 +689,13 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               },
               {
                 "params": [
                   "1s"
                 ],
                 "type": "non_negative_derivative"
-              },
-              {
-                "params": [
-                  "*8"
-                ],
-                "type": "math"
               },
               {
                 "params": [
@@ -784,12 +777,12 @@
       },
       "id": 19,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": false
@@ -1050,12 +1043,12 @@
       },
       "id": 20,
       "legend": {
-        "alignAsTable": true,
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
-        "rightSide": true,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": false
@@ -2062,18 +2055,19 @@
       {
         "allValue": null,
         "current": {
+          "tags": [],
           "text": "demo-qfx10k2-14",
           "value": "demo-qfx10k2-14"
         },
         "datasource": "influxdb",
-        "definition": "SHOW TAG VALUES FROM \"snmp_bgp_statistics\" with KEY = \"hostname\"",
+        "definition": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"hostname\"",
         "hide": 0,
         "includeAll": false,
         "label": "Device",
         "multi": false,
         "name": "HOSTNAME",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"snmp_bgp_statistics\" with KEY = \"hostname\"",
+        "query": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"hostname\"",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2139,7 +2133,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -2170,5 +2164,5 @@
   "timezone": "browser",
   "title": "Fabric Monitoring Overview",
   "uid": "R_DbFw8ik",
-  "version": 4
+  "version": 1
 }
