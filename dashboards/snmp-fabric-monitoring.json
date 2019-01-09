@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1547017080711,
+  "iteration": 1547017829472,
   "links": [],
   "panels": [
     {
@@ -143,12 +143,6 @@
               },
               {
                 "params": [
-                  "*8"
-                ],
-                "type": "math"
-              },
-              {
-                "params": [
                   "ingress"
                 ],
                 "type": "alias"
@@ -170,12 +164,6 @@
                   "1s"
                 ],
                 "type": "non_negative_derivative"
-              },
-              {
-                "params": [
-                  "*8"
-                ],
-                "type": "math"
               },
               {
                 "params": [
@@ -416,8 +404,8 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx10k2-14",
-          "value": "demo-qfx10k2-14"
+          "text": "demo-qfx5110-11",
+          "value": "demo-qfx5110-11"
         }
       },
       "seriesOverrides": [
@@ -471,7 +459,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               },
               {
                 "params": [
@@ -501,7 +489,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               },
               {
                 "params": [
@@ -665,7 +653,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               },
               {
                 "params": [
@@ -689,7 +677,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               },
               {
                 "params": [
@@ -1335,8 +1323,8 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx10k2-14",
-          "value": "demo-qfx10k2-14"
+          "text": "demo-qfx5110-11",
+          "value": "demo-qfx5110-11"
         }
       },
       "scroll": true,
@@ -1552,8 +1540,8 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx10k2-14",
-          "value": "demo-qfx10k2-14"
+          "text": "demo-qfx5110-11",
+          "value": "demo-qfx5110-11"
         }
       },
       "scroll": true,
@@ -1748,8 +1736,8 @@
       "scopedVars": {
         "HOSTNAME": {
           "selected": true,
-          "text": "demo-qfx10k2-14",
-          "value": "demo-qfx10k2-14"
+          "text": "demo-qfx5110-11",
+          "value": "demo-qfx5110-11"
         }
       },
       "seriesOverrides": [],
@@ -2041,7 +2029,7 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [
@@ -2056,8 +2044,8 @@
         "allValue": null,
         "current": {
           "tags": [],
-          "text": "demo-qfx10k2-14",
-          "value": "demo-qfx10k2-14"
+          "text": "demo-qfx5110-11",
+          "value": "demo-qfx5110-11"
         },
         "datasource": "influxdb",
         "definition": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"hostname\"",
@@ -2081,8 +2069,12 @@
       {
         "allValue": null,
         "current": {
-          "text": "et-0/0/0",
-          "value": "et-0/0/0"
+          "tags": [],
+          "text": "et-0/0/0 + et-0/0/1",
+          "value": [
+            "et-0/0/0",
+            "et-0/0/1"
+          ]
         },
         "datasource": "influxdb",
         "definition": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"ifName\"",
@@ -2133,7 +2125,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -2164,5 +2156,5 @@
   "timezone": "browser",
   "title": "Fabric Monitoring Overview",
   "uid": "R_DbFw8ik",
-  "version": 1
+  "version": 2
 }
