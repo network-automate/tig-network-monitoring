@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1547017829472,
+  "iteration": 1547017829484,
   "links": [],
   "panels": [
     {
@@ -80,15 +80,15 @@
           "alias": "",
           "colorMode": "value",
           "colors": [
-            "rgba(50, 172, 45, 0.97)",
+            "#7eb26d",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
           "decimals": 0,
           "pattern": "/.*/",
           "thresholds": [
-            "10000",
-            "100000"
+            "100000",
+            "500000"
           ],
           "type": "number",
           "unit": "bps"
@@ -2043,7 +2043,6 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
           "text": "demo-qfx5110-11",
           "value": "demo-qfx5110-11"
         },
@@ -2056,7 +2055,7 @@
         "name": "HOSTNAME",
         "options": [],
         "query": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"hostname\"",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -2069,7 +2068,6 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
           "text": "et-0/0/0 + et-0/0/1",
           "value": [
             "et-0/0/0",
@@ -2085,7 +2083,7 @@
         "name": "ifName",
         "options": [],
         "query": "SHOW TAG VALUES FROM \"snmp_interfaces_statistics\" with KEY = \"ifName\"",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "/et-|xe-|irb-|ge-.*/",
         "skipUrlSync": false,
         "sort": 0,
@@ -2112,7 +2110,7 @@
         "name": "neighbors",
         "options": [],
         "query": "SHOW TAG VALUES FROM \"snmp_bgp_statistics\" with KEY = \"bgpPeerRemoteAddr\"",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
