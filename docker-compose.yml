@@ -14,16 +14,6 @@ services:
     networks:
       - tig
 
-  telegraf-openconfig:
-    image: telegraf:1.9.1
-    container_name: telegraf-openconfig
-    volumes:
-      - $PWD/configs/telegraf-openconfig.conf:/etc/telegraf/telegraf.conf:ro
-    depends_on:
-      - "influxdb"
-    networks:
-      - tig
-
   telegraf-snmp:
     image: inetsix/telegraf-snmp
     container_name: telegraf-snmp
@@ -46,7 +36,6 @@ services:
       - $PWD/configs/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
       - $PWD/dashboards:/var/tmp/dashboards
     depends_on:
-      - "telegraf-openconfig"
       - "telegraf-snmp"
     networks:
       - tig
