@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1547041052309,
+  "iteration": 1547120178787,
   "links": [],
   "panels": [
     {
@@ -26,6 +26,194 @@
         "w": 24,
         "x": 0,
         "y": 0
+      },
+      "id": 24,
+      "panels": [],
+      "title": "Device Information",
+      "type": "row"
+    },
+    {
+      "columns": [],
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 22,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 5,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": "value",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "#508642"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 3,
+          "mappingType": 1,
+          "pattern": "/Uptime/",
+          "thresholds": [
+            "10800",
+            "86400"
+          ],
+          "type": "number",
+          "unit": "dtdurations"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "snmp_snmp",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"jnxBoxDescr\") AS \"Product Family\", last(\"jnxBoxSerialNo\") AS \"Serial Number\", last(\"uptime\") AS \"Uptime\" FROM \"snmp_snmp\" WHERE $timeFilter",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "jnxBoxDescr"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Product Family"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "jnxBoxSerialNo"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Serial Number"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "jnxVirtualChassisMemberSWVersion"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Junos Version"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "sysHostname"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Hostname"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "uptime"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [
+                  "Uptime"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "hostname",
+              "operator": "=~",
+              "value": "/^$HOSTNAME$/"
+            }
+          ]
+        }
+      ],
+      "title": "Information for $HOSTNAME",
+      "transform": "table",
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
       },
       "id": 16,
       "panels": [],
@@ -56,7 +244,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 5
       },
       "id": 9,
       "links": [],
@@ -217,7 +405,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 5
       },
       "id": 11,
       "links": [],
@@ -377,7 +565,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 12
       },
       "id": 13,
       "legend": {
@@ -579,7 +767,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 12
       },
       "id": 14,
       "legend": {
@@ -761,7 +949,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 22
       },
       "id": 19,
       "legend": {
@@ -1027,7 +1215,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 22
       },
       "id": 20,
       "legend": {
@@ -1289,7 +1477,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 32
       },
       "id": 18,
       "panels": [],
@@ -1312,7 +1500,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 29
+        "y": 33
       },
       "id": 2,
       "links": [],
@@ -1529,7 +1717,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 29
+        "y": 33
       },
       "id": 4,
       "links": [],
@@ -1711,7 +1899,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 37
+        "y": 41
       },
       "id": 6,
       "legend": {
@@ -1895,7 +2083,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 37
+        "y": 41
       },
       "id": 7,
       "legend": {
