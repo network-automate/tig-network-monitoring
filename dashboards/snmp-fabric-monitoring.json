@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1547120178787,
+  "iteration": 1547136972693,
   "links": [],
   "panels": [
     {
@@ -184,6 +184,12 @@
               {
                 "params": [],
                 "type": "last"
+              },
+              {
+                "params": [
+                  " / 100"
+                ],
+                "type": "math"
               },
               {
                 "params": [

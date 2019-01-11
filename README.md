@@ -1,19 +1,134 @@
-This repository provides instructions about how to monitor Junos devices using a TIG stack (Telegraf-Influxdb-Grafana).  
-It currently supports data collection on Junos using SNMP and OpenConfig.
+# Network Monitoring with Telegraf / Influxdb / Grafana
 
-Please visit the [**wiki**](https://github.com/ksator/junos_monitoring_with_a_TIG_stack/wiki) for detailled instructions.  
+<!-- MarkdownTOC -->
 
-Here are some Grafana screenshots, with data collected using Openconfig telemetry (GRPC) on Junos devices:
+- Quick path to demo
+- Requiremetns & Installation
+- Commands and usage
+    - Grafana access
+    - Device List
+- Components
+- Contributors
 
-![EBGP_peers_configured.png](resources/EBGP_peers_configured.png)
+<!-- /MarkdownTOC -->
 
-![BGP_sessions_state_established.png](resources/BGP_sessions_state_established.png)
+Complete stack to monitor [Juniper](https://www.juniper.net) datacenter. it uses following components:
 
-![transitions_to_bgp_established.png](resources/transitions_to_bgp_established.png)
+- [telegraf](https://www.influxdata.com/time-series-platform/telegraf/) : Agent for collecting information from devices. It can be used in 2 different flavor: `snmp` and/or [`openconfig`](http://www.openconfig.net/)
+- [influxdb](https://www.influxdata.com/) : Time series database (TSN) to store all information sent by telegraf agents.
+- [grafana](https://grafana.com/) : Time series analytics engine to build reports from Influxdb.
 
-![BGP_prefixes_received.png](resources/BGP_prefixes_received.png)
+All the configuration is managed by templating for following components:
 
-![BGP_prefixes_sent.png](resources/BGP_prefixes_sent.png)
+- [`docker-compose`](templates/docker-compose-tig.j2) file
+- [`telegraf`](templates/telegraf-snmp.j2) configuration
 
+Dashboards available:
 
+- **Fabric Monitoring**: information from generic SNMP based device running in an IP-Fabric environment (Interface counters / BGP status / BGP Update and state messages)
+- **Fabric Reporting**: information from all Junos SNMP based devices running in an IP-Fabric environment (Hw type / Serial number / Junos Version)
 
+!["BGP Status"](resources/snmp-bgp-status.png)
+
+## Quick path to demo
+
+```shell
+# Install python requirements
+pip intall -r requirements.txt
+
+# Edit data.yml to add your devices
+vim data.yml
+
+# Build and start stack
+make build
+
+# Stop and delete stack
+make destroy
+```
+
+Open a browser to http://127.0.0.1:9081/ with `super`/`juniper123`
+
+## Requiremetns & Installation
+
+As it is based on docker, you have to install docker first:
+
+- [Centos Installation](https://docs.docker.com/install/linux/docker-ce/centos/)
+- [Ubuntu Installation](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+- [MacOS](https://docs.docker.com/docker-for-mac/install/)
+
+Then,, you have to install python requirements
+
+```shell
+pip install -r requirements.txt
+```
+
+## Commands and usage
+
+Define your targets by editing `data.yml` file:
+
+### Grafana access
+
+Access to grafna can be managed in `data.yml` file with the following section:
+
+```yaml
+grafana:
+  web:
+    port: "9081"
+    username: "super"
+    password: "juniper123"
+```
+
+> If not set, access is configured to be like: http://127.0.0.1:9081/ with username/password set to super/juniper123
+
+### Device List
+__SNMP devices__
+
+```yaml
+---
+telegraf:
+  snmp:
+    community: "public"
+    hosts:
+      172.25.90.67: 161
+      172.25.90.68: 161
+```
+
+__Junos Openconfig devices__
+
+```yaml
+---
+telegraf:
+  openconfig:
+    username: 'ansible'
+    password: 'juniper123'
+    hosts:
+      172.25.90.67: 32768
+      172.25.90.68: 32768
+```
+
+> Both `snmp` and `openconfig` definition can be configure in this `data.yml`
+
+Some commands are available to manage repository
+
+- `make build-telegraf-conf` : Build telegraf configuration with template rendering
+- `make build` : Build telegraf config, build docker-compose stack, start stack
+- `make destroy` : Stop docker stack and remove containers
+- `make start` : start an already configured stack. (Must be done if stack were built previously)
+- `make stop` : stop running stack. Containers are not deleted and can be restarted with `make start`
+- `make restart` : stop and start stack
+- `make rebuild` : destroy and build stack
+- `make {telegraf-snmp|telegraf-openconfig|influxdb|grafana}-cli` : connect to containers
+
+## Components
+
+Repository is based on docker containers and they are all managed with `docker-compose`:
+
+- `telegraf:1.9.1` image for openconfig polling
+- `inetsix/telegraf-snmp` image for SNMP polling
+- `influxdb:1.7.2`
+- `grafana:grafana/grafana:5.4.2`
+
+## Contributors
+
+- [Khelil Sator](https://github.com/ksator)
+- [Thomas Grimonet](https://github.com/titom73)
