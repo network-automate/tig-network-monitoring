@@ -11,11 +11,19 @@ All the configuration is managed by templating for following components:
 - `docker-compose` file
 - `telegraf` configuration
 
+Dashboards available:
+
+- `Fabric Monitoring`: information from generic SNMP based device running in an IP-Fabric environment (Interface counters / BGP status / BGP Update and state messages)
+- `Fabric Reporting`: information from all Junos SNMP based devices running in an IP-Fabric environment (Hw type / Serial number / Junos Version)
+
 ## Quick path to demo
 
 ```shell
 # Install python requirements
 pip intall -r requirements.txt
+
+# Edit data.yml to add your devices
+vim data.yml
 
 # Build and start stack
 make build
@@ -105,3 +113,8 @@ Repository is based on docker containers and they are all managed with `docker-c
 - `inetsix/telegraf-snmp` image for SNMP polling
 - `influxdb:1.7.2`
 - `grafana:grafana/grafana:5.4.2`
+
+## Contributors
+
+- [Khelil Sator](https://github.com/ksator)
+- [Thomas Grimonet](https://github.com/titom73)
