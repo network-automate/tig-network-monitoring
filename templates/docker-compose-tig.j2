@@ -42,9 +42,10 @@ services:
     image: grafana/grafana:5.4.2
     container_name: grafana
     ports:
-      - "9081:3000"
-    env_file:
-      - 'env.grafana'
+      - "{{ grafana.web.port|default("9081") }}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER={{ grafana.web.username | default("super") }}
+      - GF_SECURITY_ADMIN_PASSWORD={{ grafana.web.password | default("juniper123") }}
     volumes:
       - $PWD/configs/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
       - $PWD/configs/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro

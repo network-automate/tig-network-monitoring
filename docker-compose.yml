@@ -29,8 +29,9 @@ services:
     container_name: grafana
     ports:
       - "9081:3000"
-    env_file:
-      - 'env.grafana'
+    environment:
+      - GF_SECURITY_ADMIN_USER=super
+      - GF_SECURITY_ADMIN_PASSWORD=juniper123
     volumes:
       - $PWD/configs/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
       - $PWD/configs/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro

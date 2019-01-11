@@ -2,8 +2,8 @@ build-telegraf-conf:
 	@echo "======================================================================"
 	@echo "Build telegraf configuration files from template"
 	@echo "======================================================================"
-	python ./render-telegraf-configuration.py -o 'configs/telegraf-openconfig.conf' -t 'templates/telegraf-openconfig.j2' -y 'data.yml'
-	python ./render-telegraf-configuration.py -o 'configs/telegraf-snmp.conf' -t 'templates/telegraf-snmp.j2' -y 'data.yml'
+	python ./configuration-rendering.py -o 'configs/telegraf-openconfig.conf' -t 'templates/telegraf-openconfig.j2' -y 'data.yml'
+	python ./configuration-rendering.py -o 'configs/telegraf-snmp.conf' -t 'templates/telegraf-snmp.j2' -y 'data.yml'
 
 grafana-cli:
 	@echo "======================================================================"
@@ -36,7 +36,7 @@ build:
 	@echo "======================================================================"
 	@echo "create docker networks, pull docker images, create and start docker containers"
 	@echo "======================================================================"
-	python ./render-telegraf-configuration.py -o 'docker-compose.yml' -t 'templates/docker-compose-tig.j2' -y 'data.yml'
+	python ./configuration-rendering.py -o 'docker-compose.yml' -t 'templates/docker-compose-tig.j2' -y 'data.yml'
 	docker-compose -f ./docker-compose.yml up -d
 
 destroy:

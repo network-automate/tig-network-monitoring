@@ -1,4 +1,9 @@
 ---
+grafana:
+  web:
+    port: "9081"
+    username: "super"
+    password: "juniper123"
 telegraf:
   snmp:
     community: "public"
