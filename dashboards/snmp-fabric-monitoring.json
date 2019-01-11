@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1547136972693,
+  "iteration": 1547235637544,
   "links": [],
   "panels": [
     {
@@ -321,7 +321,7 @@
             [
               {
                 "params": [
-                  "ifHCInOctets"
+                  "ifInOctets"
                 ],
                 "type": "field"
               },
@@ -345,7 +345,7 @@
             [
               {
                 "params": [
-                  "ifHCOutOctets"
+                  "ifOutUcastPkts"
                 ],
                 "type": "field"
               },
@@ -435,7 +435,7 @@
           "alias": "",
           "colorMode": "value",
           "colors": [
-            "rgba(50, 172, 45, 0.97)",
+            "#7eb26d",
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
@@ -482,7 +482,7 @@
             [
               {
                 "params": [
-                  "ifHCInUcastPkts"
+                  "ifInUcastPkts"
                 ],
                 "type": "field"
               },
@@ -512,7 +512,7 @@
             [
               {
                 "params": [
-                  "ifHCOutUcastPkts"
+                  "ifOutUcastPkts"
                 ],
                 "type": "field"
               },
@@ -647,7 +647,7 @@
             [
               {
                 "params": [
-                  "ifHCInOctets"
+                  "ifInOctets"
                 ],
                 "type": "field"
               },
@@ -677,7 +677,7 @@
             [
               {
                 "params": [
-                  "ifHCOutOctets"
+                  "ifOutOctets"
                 ],
                 "type": "field"
               },
@@ -841,7 +841,7 @@
             [
               {
                 "params": [
-                  "ifHCInUcastPkts"
+                  "ifInUcastPkts"
                 ],
                 "type": "field"
               },
@@ -865,7 +865,7 @@
             [
               {
                 "params": [
-                  "ifHCOutUcastPkts"
+                  "ifOutUcastPkts"
                 ],
                 "type": "field"
               },
@@ -2320,7 +2320,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
