@@ -1,5 +1,17 @@
 # Network Monitoring with Telegraf / Influxdb / Grafana
 
+<!-- MarkdownTOC -->
+
+- Quick path to demo
+- Requiremetns & Installation
+- Commands and usage
+    - Grafana access
+    - Device List
+- Components
+- Contributors
+
+<!-- /MarkdownTOC -->
+
 Complete stack to monitor [Juniper](https://www.juniper.net) datacenter. it uses following components:
 
 - [telegraf](https://www.influxdata.com/time-series-platform/telegraf/) : Agent for collecting information from devices. It can be used in 2 different flavor: `snmp` and/or [`openconfig`](http://www.openconfig.net/)
@@ -13,8 +25,8 @@ All the configuration is managed by templating for following components:
 
 Dashboards available:
 
-- `Fabric Monitoring`: information from generic SNMP based device running in an IP-Fabric environment (Interface counters / BGP status / BGP Update and state messages)
-- `Fabric Reporting`: information from all Junos SNMP based devices running in an IP-Fabric environment (Hw type / Serial number / Junos Version)
+- **Fabric Monitoring**: information from generic SNMP based device running in an IP-Fabric environment (Interface counters / BGP status / BGP Update and state messages)
+- **Fabric Reporting**: information from all Junos SNMP based devices running in an IP-Fabric environment (Hw type / Serial number / Junos Version)
 
 ## Quick path to demo
 
