@@ -20,8 +20,8 @@ Complete stack to monitor [Juniper](https://www.juniper.net) datacenter. it uses
 
 All the configuration is managed by templating for following components:
 
-- `docker-compose` file
-- `telegraf` configuration
+- [`docker-compose`](templates/docker-compose-tig.j2) file
+- [`telegraf`](templates/telegraf-snmp.j2) configuration
 
 Dashboards available:
 
