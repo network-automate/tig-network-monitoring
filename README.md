@@ -28,6 +28,8 @@ Dashboards available:
 - **Fabric Monitoring**: information from generic SNMP based device running in an IP-Fabric environment (Interface counters / BGP status / BGP Update and state messages)
 - **Fabric Reporting**: information from all Junos SNMP based devices running in an IP-Fabric environment (Hw type / Serial number / Junos Version)
 
+!["BGP Status"](resources/snmp-bgp-status.png)
+
 ## Quick path to demo
 
 ```shell
